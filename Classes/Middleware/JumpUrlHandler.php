@@ -106,6 +106,9 @@ class JumpUrlHandler implements MiddlewareInterface
      */
     protected function getPageTsConfig(ServerRequestInterface $request): array
     {
+        if((new Typo3Version())->getMajorVersion() === 12) {
+            return $this->getTypoScriptFrontendController()->getPagesTSconfig();
+        }
         $pageInformation = $request->getAttribute('frontend.page.information');
         $id = $pageInformation->getId();
         $runtimeCache = GeneralUtility::makeInstance(CacheManager::class)->getCache('runtime');
